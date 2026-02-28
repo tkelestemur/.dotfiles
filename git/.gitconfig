@@ -1,0 +1,30 @@
+[user]
+	name = Tarik Kelestemur
+	email = tkelestemur@gmail.com
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[alias]
+	sync = !git fetch upstream && git merge upstream/main
+	lg = log --oneline --graph --decorate --all
+	st = status -sb
+	co = checkout
+	br = branch
+	cm = commit -m
+	unstage = reset HEAD --
+	last = log -1 HEAD
+[core]
+	pager = delta
+	excludesfile = ~/.gitignore_global
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main

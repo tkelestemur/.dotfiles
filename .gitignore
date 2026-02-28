@@ -1,0 +1,10 @@
+# Secrets - never commit these
+*.local
+.env
+secrets/
+
+# OS
+.DS_Store
+
+# Backup files created by install script
+*.bak

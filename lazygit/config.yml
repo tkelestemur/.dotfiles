@@ -1,0 +1,21 @@
+gui:
+  showIcons: true
+  nerdFontsVersion: "3"
+  theme:
+    lightTheme: false
+    activeBorderColor:
+      - green
+      - bold
+    inactiveBorderColor:
+      - white
+    selectedLineBgColor:
+      - reverse
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  log:
+    showGraph: always
+    order: topo-order
+os:
+  editPreset: "nvim"
