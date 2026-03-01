@@ -4,3 +4,8 @@ background-blur-radius = 20
 shell-integration-features = no-cursor
 macos-titlebar-style = tabs
 window-save-state = always
+theme = TokyoNight Night
+keybind = ctrl+shift+left=goto_split:left
+keybind = ctrl+shift+right=goto_split:right
+keybind = ctrl+shift+up=goto_split:top
+keybind = ctrl+shift+down=goto_split:bottom
