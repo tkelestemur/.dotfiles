@@ -80,7 +80,7 @@ install_packages() {
     # Cask apps (macOS only)
     if [ "$OS" = "Darwin" ]; then
         local casks=(
-            wezterm
+            ghostty
             visual-studio-code
             cursor
             zed
@@ -145,8 +145,8 @@ symlink_configs() {
     link_file "$DOTFILES_DIR/git/.gitconfig"        "$HOME/.gitconfig"
     link_file "$DOTFILES_DIR/git/.gitignore_global"  "$HOME/.gitignore_global"
 
-    # Wezterm
-    link_file "$DOTFILES_DIR/wezterm/.wezterm.lua"  "$HOME/.wezterm.lua"
+    # Ghostty
+    link_file "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
 
     # Lazygit
     if [ "$OS" = "Darwin" ]; then

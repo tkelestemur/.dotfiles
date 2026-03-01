@@ -24,7 +24,7 @@
     "terminal.integrated.inheritEnv": false,
     "extensions.ignoreRecommendations": true,
     "security.workspace.trust.untrustedFiles": "open",
-    "terminal.external.linuxExec": "wezterm",
+    "terminal.external.linuxExec": "ghostty",
     "remote.autoForwardPortsSource": "hybrid",
     "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
     "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
