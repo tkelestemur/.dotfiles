@@ -34,28 +34,14 @@ link_file() {
 }
 
 # -------------------------------------------------------------------
-# 1. Install Homebrew (both macOS and Linux)
-# -------------------------------------------------------------------
-install_homebrew() {
-    if command -v brew &>/dev/null; then
-        info "Homebrew already installed"
-    else
-        info "Installing Homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-        # Add to PATH for this session
-        if [ "$OS" = "Darwin" ]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        else
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        fi
-    fi
-}
-
-# -------------------------------------------------------------------
-# 2. Install packages via Homebrew
+# 1. Install packages via Homebrew
 # -------------------------------------------------------------------
 install_packages() {
+    if ! command -v brew &>/dev/null; then
+        warn "Homebrew not found, skipping package installation"
+        return
+    fi
+
     info "Installing packages via Homebrew..."
 
     local packages=(
@@ -64,7 +50,6 @@ install_packages() {
         gh
         delta
         lazygit
-        nvm
         uv
     )
 
@@ -76,28 +61,10 @@ install_packages() {
             brew install "$pkg"
         fi
     done
-
-    # Cask apps (macOS only)
-    if [ "$OS" = "Darwin" ]; then
-        local casks=(
-            ghostty
-            visual-studio-code
-            cursor
-            zed
-        )
-        for cask in "${casks[@]}"; do
-            if brew list --cask "$cask" &>/dev/null; then
-                info "$cask already installed"
-            else
-                info "Installing $cask..."
-                brew install --cask "$cask"
-            fi
-        done
-    fi
 }
 
 # -------------------------------------------------------------------
-# 3. Install Oh My Zsh
+# 2. Install Oh My Zsh
 # -------------------------------------------------------------------
 install_oh_my_zsh() {
     if [ -d "$HOME/.oh-my-zsh" ]; then
@@ -109,30 +76,7 @@ install_oh_my_zsh() {
 }
 
 # -------------------------------------------------------------------
-# 4. Install NVM & Node.js
-# -------------------------------------------------------------------
-install_node() {
-    export NVM_DIR="$HOME/.nvm"
-    local nvm_sh
-    nvm_sh="$(brew --prefix nvm)/nvm.sh"
-
-    if [ -f "$nvm_sh" ]; then
-        # shellcheck source=/dev/null
-        . "$nvm_sh"
-
-        if command -v node &>/dev/null; then
-            info "Node.js already installed: $(node --version)"
-        else
-            info "Installing latest LTS Node.js..."
-            nvm install --lts
-        fi
-    else
-        warn "NVM not found, skipping Node.js setup"
-    fi
-}
-
-# -------------------------------------------------------------------
-# 5. Symlink config files
+# 3. Symlink config files
 # -------------------------------------------------------------------
 symlink_configs() {
     info "Creating symlinks..."
@@ -185,7 +129,7 @@ symlink_configs() {
 }
 
 # -------------------------------------------------------------------
-# 6. Platform-specific git credential setup
+# 4. Platform-specific git credential setup
 # -------------------------------------------------------------------
 setup_git_credentials() {
     if [ "$OS" = "Darwin" ]; then
@@ -225,10 +169,8 @@ main() {
     echo "========================================="
     echo ""
 
-    install_homebrew
     install_packages
     install_oh_my_zsh
-    install_node
     symlink_configs
     setup_git_credentials
 
