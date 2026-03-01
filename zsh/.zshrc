@@ -21,5 +21,9 @@ export NVM_DIR="$HOME/.nvm"
 # Local binaries (uv, claude, etc.)
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    export TERM=xterm-256color
+fi
+
 # Homebrew
 export HOMEBREW_NO_ENV_HINTS=1
