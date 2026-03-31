@@ -26,9 +26,10 @@
     "security.workspace.trust.untrustedFiles": "open",
     "terminal.external.linuxExec": "ghostty",
     "remote.autoForwardPortsSource": "hybrid",
-    "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
-    "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
+    "workbench.iconTheme": "VS Code Dark Icons",
     "github.copilot.nextEditSuggestions.enabled": true,
     "security.promptForLocalFileProtocolHandling": false,
-    "claudeCode.preferredLocation": "panel"
+    "chat.tips.enabled": false,
+    "chat.viewSessions.orientation": "stacked",
+    "workbench.colorTheme": "VS Code Dark"
 }
