@@ -26,7 +26,6 @@
   "security.workspace.trust.untrustedFiles": "open",
   "terminal.external.linuxExec": "ghostty",
   "remote.autoForwardPortsSource": "hybrid",
-  "workbench.iconTheme": "VS Code Dark Icons",
   "github.copilot.nextEditSuggestions.enabled": true,
   "security.promptForLocalFileProtocolHandling": false,
   "chat.tips.enabled": false,

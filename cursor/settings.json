@@ -33,15 +33,10 @@
   "editor.inlayHints.enabled": "off",
   "cursor.composer.shouldChimeAfterChatFinishes": true,
   "cursor.cpp.enablePartialAccepts": true,
-  "python.languageServer": "None",
-  "cursorpyright.disableLanguageServices": true,
   "diffEditor.renderSideBySide": true,
-  "remote.SSH.remotePlatform": {
-    "eka-control-4": "linux",
-    "g4": "linux"
-  },
   "window.autoDetectColorScheme": false,
-  "cursor.general.reduceTransparency": true,
   "workbench.agentsWindowButton.enabled": false,
   "workbench.layoutControl.enabled": false,
+  "python.languageServer": "None",
+  "ty.diagnosticMode": "openFilesOnly",
 }

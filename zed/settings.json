@@ -1,21 +1,114 @@
 {
-    "agent_servers": {
-        "claude": {
-            "favorite_config_option_values": {
-                "mode": ["bypassPermissions"]
-            }
+    "project_panel": {
+        "dock": "left",
+        "entry_spacing": "standard",
+        "indent_guides": {
+            "show": "never"
+        },
+        "scrollbar": {
+            "horizontal_scroll": false
         }
     },
+    "use_system_window_tabs": true,
+    "diff_view_style": "split",
+    "autosave": {
+        "after_delay": {
+            "milliseconds": 100
+        }
+    },
+    "preview_tabs": {
+        "enabled": false
+    },
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/.jj",
+        "**/CVS",
+        "**/.DS_Store",
+        "**/Thumbs.db",
+        "**/.classpath",
+        "**/.settings",
+        "**/__pycache__",
+        "**/.idea",
+        "**/.vscode",
+        "**/*.ipynb_checkpoints",
+        "**/*.pyc",
+        "**/.venv",
+        "**/.ruff_cache",
+        "**/.mypy_cache",
+        "**/.pytest_cache"
+    ],
     "telemetry": {
         "diagnostics": false,
         "metrics": false
     },
     "icon_theme": "Zed (Default)",
-    "ui_font_size": 16,
-    "buffer_font_size": 15,
+    "ui_font_size": 14,
+    "buffer_font_size": 12,
+    "buffer_line_height": "standard",
+    "show_whitespaces": "none",
+    "show_wrap_guides": false,
+    "inline_code_actions": false,
+    "minimap": {
+        "show": "never"
+    },
+    "gutter": {
+        "folds": false
+    },
+    "inlay_hints": {
+        "enabled": false
+    },
+    "tab_bar": {
+        "show_nav_history_buttons": false,
+        "show_tab_bar_buttons": false
+    },
+    "tabs": {
+        "file_icons": false,
+        "git_status": false,
+        "show_close_button": "hover",
+        "show_diagnostics": "off"
+    },
+    "toolbar": {
+        "breadcrumbs": false,
+        "quick_actions": false,
+        "selections_menu": false,
+        "agent_review": false,
+        "code_actions": false
+    },
+    "title_bar": {
+        "show_onboarding_banner": false,
+        "show_user_picture": false,
+        "show_user_menu": false,
+        "show_sign_in": false
+    },
+    "status_bar": {
+        "active_language_button": false,
+        "cursor_position_button": true,
+        "line_endings_button": false
+    },
+    "collaboration_panel": {
+        "button": false
+    },
+    "outline_panel": {
+        "button": false
+    },
+    "git": {
+        "inline_blame": {
+            "enabled": false
+        }
+    },
     "theme": {
         "mode": "dark",
         "light": "Ayu Light",
-        "dark": "Ayu Dark"
+        "dark": "Tokyo Night"
+    },
+    "languages": {
+        "Python": {
+            "language_servers": [
+                "ty",
+                "ruff"
+            ]
+        }
     }
 }
