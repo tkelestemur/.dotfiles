@@ -1,6 +1,5 @@
 [user]
 	name = Tarik Kelestemur
-	email = tkelestemur@gmail.com
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -28,11 +27,8 @@
 	rebase = false
 [init]
 	defaultBranch = main
-[credential]
-	helper = osxkeychain
-[credential "https://github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+
+# Keep email and machine-specific settings outside the dotfiles repo.
+# Set email with: git config --file ~/.gitconfig.local user.email "you@example.com"
+[include]
+	path = ~/.gitconfig.local

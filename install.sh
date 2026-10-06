@@ -3,6 +3,7 @@ set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OS="$(uname -s)"
+LOCAL_GIT_CONFIG="$HOME/.gitconfig.local"
 
 # Colors for output
 RED='\033[0;31m'
@@ -71,7 +72,9 @@ install_oh_my_zsh() {
         info "Oh My Zsh already installed"
     else
         info "Installing Oh My Zsh..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        local installer
+        installer="$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        sh -c "$installer" "" --unattended
     fi
 }
 
@@ -86,11 +89,28 @@ symlink_configs() {
     link_file "$DOTFILES_DIR/zsh/.zprofile"  "$HOME/.zprofile"
 
     # Git
+    # Preserve an existing identity before replacing the global config.
+    touch "$LOCAL_GIT_CONFIG"
+    chmod 600 "$LOCAL_GIT_CONFIG"
+    if ! git config --file "$LOCAL_GIT_CONFIG" user.email >/dev/null 2>&1; then
+        local git_email
+        if git_email="$(git config --global --includes user.email)" && [ -n "$git_email" ]; then
+            git config --file "$LOCAL_GIT_CONFIG" user.email "$git_email"
+        else
+            warn 'Set your email locally: git config --file ~/.gitconfig.local user.email "you@example.com"'
+        fi
+    fi
     link_file "$DOTFILES_DIR/git/.gitconfig"        "$HOME/.gitconfig"
     link_file "$DOTFILES_DIR/git/.gitignore_global"  "$HOME/.gitignore_global"
 
     # Ghostty
-    link_file "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
+    local ghostty_dir="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty"
+    link_file "$DOTFILES_DIR/ghostty/config" "$ghostty_dir/config.ghostty"
+    link_file "$DOTFILES_DIR/ghostty/config" "$ghostty_dir/config"
+    if [ "$OS" = "Darwin" ] && [ -d "$HOME/Library/Application Support/com.mitchellh.ghostty" ]; then
+        link_file "$DOTFILES_DIR/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty"
+        link_file "$DOTFILES_DIR/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+    fi
 
     # Lazygit
     if [ "$OS" = "Darwin" ]; then
@@ -133,30 +153,29 @@ symlink_configs() {
 # -------------------------------------------------------------------
 setup_git_credentials() {
     if [ "$OS" = "Darwin" ]; then
-        # macOS uses osxkeychain - already in .gitconfig as conditional
-        git config --global credential.helper osxkeychain
+        git config --file "$LOCAL_GIT_CONFIG" --replace-all credential.helper osxkeychain
     else
-        # Linux: use gh auth or cache
-        if command -v gh &>/dev/null; then
-            info "Setting up gh as git credential helper on Linux..."
-            gh auth setup-git
-        else
-            git config --global credential.helper cache
-        fi
+        # GitHub-specific gh helpers are configured below without requiring login.
+        git config --file "$LOCAL_GIT_CONFIG" --replace-all credential.helper cache
     fi
 
     # Setup gh credential helpers for GitHub
     if command -v gh &>/dev/null; then
-        local gh_path
-        gh_path="$(which gh)"
-        git config --global "credential.https://github.com.helper" ""
-        git config --global --add "credential.https://github.com.helper" "!${gh_path} auth git-credential"
-        git config --global "credential.https://gist.github.com.helper" ""
-        git config --global --add "credential.https://gist.github.com.helper" "!${gh_path} auth git-credential"
+        local gh_path gh_helper
+        gh_path="$(command -v gh)"
+        printf -v gh_helper '!%q auth git-credential' "$gh_path"
+        git config --file "$LOCAL_GIT_CONFIG" --replace-all "credential.https://github.com.helper" ""
+        git config --file "$LOCAL_GIT_CONFIG" --add "credential.https://github.com.helper" "$gh_helper"
+        git config --file "$LOCAL_GIT_CONFIG" --replace-all "credential.https://gist.github.com.helper" ""
+        git config --file "$LOCAL_GIT_CONFIG" --add "credential.https://gist.github.com.helper" "$gh_helper"
     fi
 
-    # Init git-lfs
-    git lfs install
+    # Keep machine settings local and avoid changing hooks in the current repo.
+    if command -v git-lfs &>/dev/null; then
+        git lfs install --file="$LOCAL_GIT_CONFIG" --skip-repo
+    else
+        warn "git-lfs not found, skipping Git LFS setup"
+    fi
 }
 
 # -------------------------------------------------------------------
