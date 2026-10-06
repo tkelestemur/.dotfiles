@@ -30,5 +30,9 @@
   "security.promptForLocalFileProtocolHandling": false,
   "chat.tips.enabled": false,
   "chat.viewSessions.orientation": "stacked",
-  "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+  "workbench.colorTheme": "Dark Modern",
+  "extensions.supportAgentsWindow": {
+    "monokai.theme-monokai-pro-vscode": true,
+  },
+  "window.customTitleBarVisibility": "never",
 }
