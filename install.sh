@@ -146,6 +146,7 @@ symlink_configs() {
         local zed_dir="$HOME/.config/zed"
     fi
     link_file "$DOTFILES_DIR/zed/settings.json" "$zed_dir/settings.json"
+    link_file "$DOTFILES_DIR/zed/keymap.json" "$zed_dir/keymap.json"
 }
 
 # -------------------------------------------------------------------
