@@ -8,6 +8,10 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+# Keep robbyrussell's styling with a lowercase short hostname and home-relative path.
+PROMPT='%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[magenta]%}${(L)HOST%%.*}%{$reset_color%} %{$fg[cyan]%}%~%{$reset_color%}'
+PROMPT+=' $(git_prompt_info)'
+
 # Google Cloud SDK
 if [ -f "$HOME/code/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/code/google-cloud-sdk/path.zsh.inc"; fi
 if [ -f "$HOME/code/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/code/google-cloud-sdk/completion.zsh.inc"; fi
